@@ -31,9 +31,9 @@ columnas_relevantes = ['Docente', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'
 colores = ['#31AB58', '#15539E', '#31AB58', '#15539E', '#31AB58', '#15539E', '#31AB58', '#15539E', '#31AB58',
            '#15539E', '#31AB58']
 
-# Iterar sobre todas las filas del DataFrame
 for index, row in resultados_por_maestro.iterrows():
     # Obtener el nombre del maestro y las calificaciones para la fila actual
+
     maestro = row['Docente']
     calificaciones = row['P1':'P11']
 
@@ -53,5 +53,3 @@ for index, row in resultados_por_maestro.iterrows():
 
     # Cerrar la figura para liberar recursos
     plt.close()
-
-
