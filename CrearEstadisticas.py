@@ -24,14 +24,16 @@ def crear_estadisticas(tabla):
     return tabla
 
 def generar_estadisticas_por_maestro(resultados_por_maestro, carpeta_estadisticas):
-
+    # Definir colores para las barras
     colores = ['#31AB58', '#15539E'] * 6
-    plt.figure(figsize=(12, 8))
 
     for index, row in resultados_por_maestro.iterrows():
+        # Obtener el nombre del maestro y las calificaciones para la fila actual
+
         maestro = row['Docente']
         calificaciones = row['P1':'P11']
 
+        plt.figure(figsize=(12, 8))
         plt.bar(calificaciones.index, calificaciones, color=colores, edgecolor='black', linewidth=1.2)
         plt.title(f'Evaluacion Docente: {maestro}', fontsize=18, pad=20)
         plt.xlabel('Preguntas', fontsize=14)
@@ -41,6 +43,9 @@ def generar_estadisticas_por_maestro(resultados_por_maestro, carpeta_estadistica
         plt.xticks(rotation=45, ha='right')
 
         # Guardar la imagen en la carpeta "Estadisticas" con un nombre único
+        plt.tight_layout()
         ruta_guardado = os.path.join(carpeta_estadisticas, f'{maestro}_Estadistica.png')
         plt.savefig(ruta_guardado)
-    plt.close()
+
+        # Cerrar la figura para liberar recursos
+        plt.close()
