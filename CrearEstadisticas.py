@@ -25,3 +25,5 @@ def crear_estadisticas(tabla):
 
 
 
+
+#%%
