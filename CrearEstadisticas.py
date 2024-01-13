@@ -4,6 +4,9 @@ Created on Thu Jan 11 07:56:08 2024
 
 @author: TheLittleScout
 """
+import os
+import numpy as np
+import matplotlib.pyplot as plt
 
 def crear_estadisticas(tabla):
     tabla["P1"] = tabla["Ambiente"].apply(lambda x: 10 if x == "Excelente" else (8 if x == "Bueno" else (6 if x == "Regular" else 0)))
@@ -19,3 +22,25 @@ def crear_estadisticas(tabla):
     tabla["P11"] = tabla["Programado"].apply(lambda x: 10 if x == "Sí" else (5 if x == "No" else 0))
 
     return tabla
+
+def generar_estadisticas_por_maestro(resultados_por_maestro, carpeta_estadisticas):
+
+    colores = ['#31AB58', '#15539E'] * 6
+    plt.figure(figsize=(12, 8))
+
+    for index, row in resultados_por_maestro.iterrows():
+        maestro = row['Docente']
+        calificaciones = row['P1':'P11']
+
+        plt.bar(calificaciones.index, calificaciones, color=colores, edgecolor='black', linewidth=1.2)
+        plt.title(f'Evaluacion Docente: {maestro}', fontsize=18, pad=20)
+        plt.xlabel('Preguntas', fontsize=14)
+        plt.ylabel('Promedio', fontsize=14)
+        plt.ylim(0, 10)
+        plt.yticks(np.arange(0, 11, 1))
+        plt.xticks(rotation=45, ha='right')
+
+        # Guardar la imagen en la carpeta "Estadisticas" con un nombre único
+        ruta_guardado = os.path.join(carpeta_estadisticas, f'{maestro}_Estadistica.png')
+        plt.savefig(ruta_guardado)
+    plt.close()
