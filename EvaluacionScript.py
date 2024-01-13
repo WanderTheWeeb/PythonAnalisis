@@ -25,11 +25,8 @@ resultados_por_maestro = df_con_estadisticas.groupby(
     "Docente").mean()  # Se obtienen los promedios y se agrupa por docente
 resultados_por_maestro = resultados_por_maestro.reset_index()  # Los maestros vuelven a ser Columna
 
-# Columnas relevantes para el gráfico
-columnas_relevantes = ['Docente', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11']
 # Definir colores para las barras
-colores = ['#31AB58', '#15539E', '#31AB58', '#15539E', '#31AB58', '#15539E', '#31AB58', '#15539E', '#31AB58',
-           '#15539E', '#31AB58']
+colores = ['#31AB58', '#15539E'] * 6
 
 for index, row in resultados_por_maestro.iterrows():
     # Obtener el nombre del maestro y las calificaciones para la fila actual
