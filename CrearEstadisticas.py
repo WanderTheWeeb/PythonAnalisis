@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def crear_estadisticas(tabla):
+    # Se crean las columnas con los valores cuantificados
     tabla["P1"] = tabla["Ambiente"].apply(lambda x: 10 if x == "Excelente" else (8 if x == "Bueno" else (6 if x == "Regular" else 0)))
     tabla["P2"] = tabla["Participación"].apply(lambda x: 10 if x == "Siempre" else (8 if x == "Casi siempre" else (6 if x == "Pocas veces" else 0)))
     tabla["P3"] = tabla["Dudas"].apply(lambda x: 10 if x == "Siempre" else (8 if x == "Casi siempre" else (6 if x == "Pocas veces" else 0)))

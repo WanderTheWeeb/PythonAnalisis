@@ -5,10 +5,10 @@ Created on Thu Jan 11 07:42:38 2024
 @author: TheLittleScout
 """
 
-import numpy as np
 import os
+
 import pandas as pd
-import matplotlib.pyplot as plt
+
 from CrearEstadisticas import crear_estadisticas, generar_estadisticas_por_maestro
 
 carpeta_estadisticas = 'Estadisticas'
@@ -28,3 +28,4 @@ resultados_por_maestro = resultados_por_maestro.round(2)  # Se redondean los pro
 resultados_por_maestro.to_csv("Resultados.csv", index=False)  # Se guardan los resultados en un archivo csv
 
 generar_estadisticas_por_maestro(resultados_por_maestro, carpeta_estadisticas)
+
