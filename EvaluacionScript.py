@@ -5,8 +5,9 @@ Created on Thu Jan 11 07:42:38 2024
 @author: TheLittleScout
 """
 import os
+
 import pandas as pd
-from matplotlib import pyplot as plt
+from pylatex import Document, Section, NoEscape, Figure, NewPage, Tabularx
 
 from CrearEstadisticas import crear_estadisticas, generar_estadisticas_por_maestro
 
@@ -28,7 +29,60 @@ resultados_por_maestro.to_csv("Resultados.csv", index=False)  # Se guardan los r
 
 estadisticas_lista = generar_estadisticas_por_maestro(resultados_por_maestro)
 
-# Ahora puedes acceder a las figuras por índice
-indice_seleccionado = 5  # Cambia esto al índice que desees
-figura = estadisticas_lista[indice_seleccionado]
+for i, estadistica in enumerate(estadisticas_lista):
+    nombre_archivo = f'{resultados_por_maestro.iloc[i]["Docente"]}.png'
+    estadistica.savefig(os.path.join(carpeta_estadisticas, nombre_archivo))
 
+doc = Document(geometry_options={'margin': '1in', 'width': '8.5in'})
+doc.preamble.append(NoEscape(r'\usepackage[utf8]{inputenc}'))
+doc.preamble.append(NoEscape(r'\usepackage[spanish]{babel}'))
+doc.preamble.append(NoEscape(r'\usepackage{graphicx}'))
+
+for i, estadistica in enumerate(estadisticas_lista):
+    nombre_maestro = resultados_por_maestro.iloc[i]["Docente"]
+    P1 = resultados_por_maestro.iloc[i]["P1"]
+    P2 = resultados_por_maestro.iloc[i]["P2"]
+    P3 = resultados_por_maestro.iloc[i]["P3"]
+    P4 = resultados_por_maestro.iloc[i]["P4"]
+    P5 = resultados_por_maestro.iloc[i]["P5"]
+    P6 = resultados_por_maestro.iloc[i]["P6"]
+    P7 = resultados_por_maestro.iloc[i]["P7"]
+    P8 = resultados_por_maestro.iloc[i]["P8"]
+    P9 = resultados_por_maestro.iloc[i]["P9"]
+    P10 = resultados_por_maestro.iloc[i]["P10"]
+    P11 = resultados_por_maestro.iloc[i]["P11"]
+    ruta_imagen = f'{carpeta_estadisticas}/{nombre_maestro}.png'
+
+    with doc.create(Section('', numbering=False)):
+        doc.append(NoEscape(r'\centering\Large'))
+        doc.append(f'Evaluación Docente: {nombre_maestro}')
+
+        with doc.create(Figure(position='h!')) as fig:
+            fig.append(NoEscape(r'\centering'))
+            fig.add_image(ruta_imagen, width=NoEscape(r'0.9\textwidth'))
+
+        with doc.create(Tabularx('X|X', width_argument=NoEscape(r'\textwidth'))) as table:
+            table.add_hline()
+            table.add_row(["Pregunta", "Promedio"], color="lightgray", escape=False)
+            table.add_row(['Ambiente de trabajo', P1])
+            table.add_row(["Participación en clase", P2])
+            table.add_row(["Resolución de dudas", P3])
+            table.add_row(["Apoyo en clase", P4])
+            table.add_row(["Conocimiento del tema", P5])
+            table.add_row(["Corrección de actividades", P6])
+            table.add_row(["Avisar cuando no asistirá", P7])
+            table.add_row(["Entrada a clase", P8])
+            table.add_row(["Salida de clase", P9])
+            table.add_row(["Clase en español", P10])
+            table.add_row(["Programado", P11])
+
+        doc.append(NewPage())
+
+# Generar código LaTeX y guardar en un archivo
+doc.generate_tex('Evaluacion.tex')
+
+# Generar un archivo PDF
+doc.generate_pdf("Evaluacion", clean_tex=True, clean=True)
+print("Se ha generado el archivo PDF")
+
+#%%

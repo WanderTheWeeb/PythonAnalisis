@@ -4,9 +4,9 @@ Created on Thu Jan 11 07:56:08 2024
 
 @author: TheLittleScout
 """
-import os
-import numpy as np
+from io import BytesIO
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def crear_estadisticas(tabla):
@@ -61,4 +61,24 @@ def generar_estadisticas_por_maestro(resultados_por_maestro):
     return estadisticas_por_maestro
 
 
-#%%
+def plot_to_image(plt):
+    image_stream = BytesIO()
+    plt.savefig(image_stream, format='png')
+    image_stream.seek(0)
+    return image_stream
+
+
+preguntas = [
+    "El ambiente de trabajo y la interacción en clase promovidos han sido:",
+    "El docente impulsa la participación de los estudiantes durante las clases para mejorar el aprendizaje:",
+    "¿El docente apoya y aclara dudas cuando se le solicita?",
+    "¿En qué nivel de calidad el apoyo y las clases brindados te permiten mejorar tu aprendizaje?",
+    "En tu opinión, ¿Cuál es el nivel de conocimiento y dominio del idioma que demuestra el docente?",
+    "¿El docente lee, revisa y devuelve los trabajos y tareas solicitados con observaciones que te permite "
+    "corregir tus errores?",
+    "¿El docente avisa a los alumnos en caso de no atender la clase en el horario programado?",
+    "¿El docente es puntual en su horario de clase programado?",
+    "¿El horario que el docente imparte la clase coincide con el horario programado?",
+    "¿Con qué frecuencia el docente imparte la clase en español?",
+    "¿Te gustaría recibir otro curso con el mismo docente?"
+]
