@@ -9,7 +9,7 @@ import os
 import pandas as pd
 from pylatex import Document, Section, NoEscape, Figure, NewPage, Tabularx
 
-from CrearEstadisticas import crear_estadisticas, generar_estadisticas_por_maestro
+from CrearEstadisticas import crear_estadisticas, generar_estadisticas_por_maestro, preguntas
 
 carpeta_estadisticas = 'Estadisticas'
 os.makedirs(carpeta_estadisticas, exist_ok=True)
@@ -61,20 +61,21 @@ for i, estadistica in enumerate(estadisticas_lista):
             fig.append(NoEscape(r'\centering'))
             fig.add_image(ruta_imagen, width=NoEscape(r'0.9\textwidth'))
 
-        with doc.create(Tabularx('X|X', width_argument=NoEscape(r'\textwidth'))) as table:
+        doc.append(NoEscape(r'\small'))
+        with doc.create(Tabularx('X|c', width_argument=NoEscape(r'\textwidth'))) as table:
             table.add_hline()
-            table.add_row(["Pregunta", "Promedio"], color="lightgray", escape=False)
-            table.add_row(['Ambiente de trabajo', P1])
-            table.add_row(["Participación en clase", P2])
-            table.add_row(["Resolución de dudas", P3])
-            table.add_row(["Apoyo en clase", P4])
-            table.add_row(["Conocimiento del tema", P5])
-            table.add_row(["Corrección de actividades", P6])
-            table.add_row(["Avisar cuando no asistirá", P7])
-            table.add_row(["Entrada a clase", P8])
-            table.add_row(["Salida de clase", P9])
-            table.add_row(["Clase en español", P10])
-            table.add_row(["Programado", P11])
+            table.add_row(["Pregunta", "Promedio"], color="lightgray")
+            table.add_row([preguntas[0], P1])
+            table.add_row([preguntas[1], P2])
+            table.add_row([preguntas[2], P3])
+            table.add_row([preguntas[3], P4])
+            table.add_row([preguntas[4], P5])
+            table.add_row([preguntas[5], P6])
+            table.add_row([preguntas[6], P7])
+            table.add_row([preguntas[7], P8])
+            table.add_row([preguntas[8], P9])
+            table.add_row([preguntas[9], P10])
+            table.add_row([preguntas[10], P11])
 
         doc.append(NewPage())
 
@@ -85,4 +86,4 @@ doc.generate_tex('Evaluacion.tex')
 doc.generate_pdf("Evaluacion", clean_tex=True, clean=True)
 print("Se ha generado el archivo PDF")
 
-#%%
+# %%
